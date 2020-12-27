@@ -1,0 +1,37 @@
+version: '3.6'
+services:
+  db:
+    container_name: blog_api_db       
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: account_repository_test
+    image: 'postgres:11-alpine'
+    restart: always
+    ports:
+      - '5432:5432'    
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  
+  app:
+    build: .
+    container_name: blog_api
+    depends_on:
+      - db
+    environment:
+      MIX_ENV: dev
+      DB_PASSWORD: postgres
+      DB_USER: postgres
+      DB_NAME: account_repository_test      
+      DB_HOST: db
+    ports:
+      - '4000:4000'
+    volumes:
+      - .:/app
+      - /app/deps
+      - /app/_build
+            
+volumes:
+  pgdata:
+    driver: local
