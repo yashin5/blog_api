@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY mix.exs mix.lock ./
 
-RUN apt-get update && apt-get install make && mix do local.hex --force, local.rebar
+RUN apt-get update && apt-get install make gcc -y && mix do local.hex --force, local.rebar
 
 CMD mix setup && mix phx.server

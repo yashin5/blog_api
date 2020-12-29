@@ -39,7 +39,9 @@ defmodule BlogApi.MixProject do
       {:phoenix_pubsub, "~> 2.0"},
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
-      {:jason, "~> 1.0"}
+      {:mox, "~> 0.5.0", only: :test},
+      {:jason, "~> 1.0"},
+      {:argon2_elixir, "~> 2.3"}
     ]
   end
 

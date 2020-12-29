@@ -20,7 +20,7 @@ services:
     depends_on:
       - db
     environment:
-      MIX_ENV: dev
+      MIX_ENV: test
       DB_PASSWORD: postgres
       DB_USER: postgres
       DB_NAME: account_repository_test      

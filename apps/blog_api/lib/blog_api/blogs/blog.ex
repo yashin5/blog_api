@@ -3,6 +3,8 @@ defmodule BlogApi.Blogs.Blog do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias BlogApi.Users.User
+
   @required_fields [
     :name
   ]
@@ -15,6 +17,8 @@ defmodule BlogApi.Blogs.Blog do
   schema "blogs" do
     field :name, :string
     field :description, :string
+
+    belongs_to(:user, User, type: :binary_id)
 
     timestamps()
   end

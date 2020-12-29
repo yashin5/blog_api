@@ -7,6 +7,8 @@ defmodule BlogApi.Repo.Migrations.Blogs do
       add :name, :string, null: false
       add :description, :string
 
+      add(:user_id, references(:users, type: :uuid), null: false)
+
       timestamps()
     end
   end
