@@ -33,7 +33,7 @@ defmodule BlogApi.Users.User do
     timestamps()
   end
 
-  def changeset(accounts, params \\ %{}) do
+  def changeset(accounts, %{} = params) do
     required_fields = [:role, :name, :email, :password]
 
     accounts

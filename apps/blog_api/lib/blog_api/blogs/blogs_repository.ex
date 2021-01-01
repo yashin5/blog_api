@@ -5,16 +5,12 @@ defmodule BlogApi.Blogs.BlogsRepository do
 
   import Ecto.Query, only: [where: 3]
 
-  def create(%{user_id: user_id} = attrs \\ %{}) do
-    case UserRepository.get_user(%{user_id: user_id}) do
-      {:ok, user} ->
-        user
-        |> Ecto.build_assoc(:blogs, attrs)
-        |> Blog.changeset(attrs)
-        |> Repo.insert()
-
-      error ->
-        error
+  def create(%{user_id: user_id} = attrs) do
+    with {:ok, user} <- UserRepository.get_user(%{user_id: user_id}) do
+      user
+      |> Ecto.build_assoc(:blogs, attrs)
+      |> Blog.changeset(attrs)
+      |> Repo.insert()
     end
   end
 
@@ -22,7 +18,7 @@ defmodule BlogApi.Blogs.BlogsRepository do
 
   def get(id), do: Repo.get(Blog, id)
 
-  def update(blog, attrs \\ %{}) do
+  def update(blog, %{} = attrs) do
     blog
     |> Blog.changeset(attrs)
     |> Repo.update()

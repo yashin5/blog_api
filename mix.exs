@@ -38,7 +38,7 @@ defmodule BlogApi.Umbrella.MixProject do
   # and cannot be accessed from applications inside the apps/ folder.
   defp aliases do
     [
-      test: ["reset", "test"],
+      test: ["test"],
       setup: ["deps.get", "deps.compile", "ecto.create", "ecto.migrate"],
       reset: ["ecto.drop", "ecto.create", "ecto.migrate"]
     ]

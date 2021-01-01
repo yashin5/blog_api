@@ -2,7 +2,7 @@ defmodule BlogApi.Tokens.TokenRepository do
   @moduledoc """
     This module is responsable to generate, validate and renew the token.
   """
-  import Ecto.Query, only: [where: 3, last: 2, select: 2]
+  import Ecto.Query, only: [where: 3, last: 2]
 
   alias BlogApi.Repo
   alias BlogApi.Tokens.Token

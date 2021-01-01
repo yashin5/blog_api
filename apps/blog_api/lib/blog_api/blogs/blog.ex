@@ -6,7 +6,8 @@ defmodule BlogApi.Blogs.Blog do
   alias BlogApi.Users.User
 
   @required_fields [
-    :name
+    :name,
+    :user_id
   ]
 
   @optional_fields [
