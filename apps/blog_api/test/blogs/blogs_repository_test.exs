@@ -2,15 +2,28 @@ defmodule Blogs.BlogsRepositoryTest do
   use BlogApi.DataCase, async: true
 
   alias BlogApi.Blogs.{Blog, BlogsRepository}
+  alias BlogApi.Users.UserRepository
 
   describe "create/1" do
-    test "should create a blog" do
+    setup do
+      {:ok, %{id: id}} =
+        UserRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
+
+      on_exit(fn ->
+        nil
+      end)
+
+      {:ok, %{user_id: id}}
+    end
+
+    test "should create a blog", %{user_id: user_id} do
       %{name: name, description: description} =
-        attrs = %{name: "Jurema's blog", description: "that's it!"}
+        attrs = %{user_id: user_id, name: "Jurema's blog", description: "that's it!"}
 
       assert {:ok,
               %Blog{
                 id: _id,
+                user_id: ^user_id,
                 name: ^name,
                 description: ^description
               }} = BlogsRepository.create(attrs)
@@ -18,9 +31,24 @@ defmodule Blogs.BlogsRepositoryTest do
   end
 
   describe "update/2" do
-    test "should update a blog" do
+    setup do
+      {:ok, %{id: id}} =
+        UserRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
+
+      on_exit(fn ->
+        nil
+      end)
+
+      {:ok, %{user_id: id}}
+    end
+
+    test "should update a blog", %{user_id: user_id} do
       {:ok, %{id: id} = blog} =
-        BlogsRepository.create(%{name: "Jurema's blog", description: "that's it!"})
+        BlogsRepository.create(%{
+          user_id: user_id,
+          name: "Jurema's blog",
+          description: "that's it!"
+        })
 
       %{name: name, description: description} =
         updated_attrs = %{name: "Goku's blog", description: "not's it"}
@@ -31,8 +59,19 @@ defmodule Blogs.BlogsRepositoryTest do
   end
 
   describe "get_all/0" do
-    test "should return all blogs" do
-      %{name: "Jurema's blog", description: "that's it!"}
+    setup do
+      {:ok, %{id: id}} =
+        UserRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
+
+      on_exit(fn ->
+        nil
+      end)
+
+      {:ok, %{user_id: id}}
+    end
+
+    test "should return all blogs", %{user_id: user_id} do
+      %{user_id: user_id, name: "Jurema's blog", description: "that's it!"}
       |> BlogsRepository.create()
 
       assert length(BlogsRepository.get_all()) == 1
@@ -40,9 +79,20 @@ defmodule Blogs.BlogsRepositoryTest do
   end
 
   describe "get/1" do
-    test "should return a blog" do
+    setup do
+      {:ok, %{id: id}} =
+        UserRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
+
+      on_exit(fn ->
+        nil
+      end)
+
+      {:ok, %{user_id: id}}
+    end
+
+    test "should return a blog", %{user_id: user_id} do
       {:ok, %{id: id, name: name, description: description}} =
-        %{name: "Jurema's blog", description: "that's it!"}
+        %{user_id: user_id, name: "Jurema's blog", description: "that's it!"}
         |> BlogsRepository.create()
 
       assert %Blog{
@@ -54,9 +104,20 @@ defmodule Blogs.BlogsRepositoryTest do
   end
 
   describe "delete/1" do
-    test "should delete a blog" do
+    setup do
       {:ok, %{id: id}} =
-        %{name: "Jurema's blog", description: "that's it!"}
+        UserRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
+
+      on_exit(fn ->
+        nil
+      end)
+
+      {:ok, %{user_id: id}}
+    end
+
+    test "should delete a blog", %{user_id: user_id} do
+      {:ok, %{id: id}} =
+        %{user_id: user_id, name: "Jurema's blog", description: "that's it!"}
         |> BlogsRepository.create()
 
       assert BlogsRepository.delete(id)
