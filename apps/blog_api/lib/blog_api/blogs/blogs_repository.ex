@@ -1,12 +1,12 @@
 defmodule BlogApi.Blogs.BlogsRepository do
   alias BlogApi.Blogs.Blog
   alias BlogApi.Repo
-  alias BlogApi.Users.UserRepository
+  alias BlogApi.Users.UsersRepository
 
   import Ecto.Query, only: [where: 3]
 
   def create(%{user_id: user_id} = attrs) do
-    with {:ok, user} <- UserRepository.get_user(%{user_id: user_id}) do
+    with {:ok, user} <- UsersRepository.get_user(%{user_id: user_id}) do
       user
       |> Ecto.build_assoc(:blogs, attrs)
       |> Blog.changeset(attrs)
@@ -16,7 +16,7 @@ defmodule BlogApi.Blogs.BlogsRepository do
 
   def get_all, do: Repo.all(Blog)
 
-  def get(id), do: Repo.get(Blog, id)
+  def get(id), do: {:ok, Repo.get(Blog, id)}
 
   def update(blog, %{} = attrs) do
     blog

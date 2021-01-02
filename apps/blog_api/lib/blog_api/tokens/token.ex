@@ -24,12 +24,12 @@ defmodule BlogApi.Tokens.Token do
   def changeset_insert(accounts, params \\ %{}) do
     accounts
     |> cast(params, [:token, :user_id])
-    |> validate_required([:token, :user_id])    
+    |> validate_required([:token, :user_id])
   end
 
   def changeset_update(accounts, %{} = params) do
     accounts
     |> cast(params, [:updated_at])
-    |> validate_required([:updated_at])    
+    |> validate_required([:updated_at])
   end
 end

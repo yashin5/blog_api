@@ -2,12 +2,12 @@ defmodule Blogs.BlogsRepositoryTest do
   use BlogApi.DataCase, async: true
 
   alias BlogApi.Blogs.{Blog, BlogsRepository}
-  alias BlogApi.Users.UserRepository
+  alias BlogApi.Users.UsersRepository
 
   describe "create/1" do
     setup do
       {:ok, %{id: id}} =
-        UserRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
+        UsersRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
 
       on_exit(fn ->
         nil
@@ -33,7 +33,7 @@ defmodule Blogs.BlogsRepositoryTest do
   describe "update/2" do
     setup do
       {:ok, %{id: id}} =
-        UserRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
+        UsersRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
 
       on_exit(fn ->
         nil
@@ -61,7 +61,7 @@ defmodule Blogs.BlogsRepositoryTest do
   describe "get_all/0" do
     setup do
       {:ok, %{id: id}} =
-        UserRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
+        UsersRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
 
       on_exit(fn ->
         nil
@@ -81,7 +81,7 @@ defmodule Blogs.BlogsRepositoryTest do
   describe "get/1" do
     setup do
       {:ok, %{id: id}} =
-        UserRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
+        UsersRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
 
       on_exit(fn ->
         nil
@@ -95,18 +95,19 @@ defmodule Blogs.BlogsRepositoryTest do
         %{user_id: user_id, name: "Jurema's blog", description: "that's it!"}
         |> BlogsRepository.create()
 
-      assert %Blog{
-               id: ^id,
-               name: ^name,
-               description: ^description
-             } = BlogsRepository.get(id)
+      assert {:ok,
+              %Blog{
+                id: ^id,
+                name: ^name,
+                description: ^description
+              }} = BlogsRepository.get(id)
     end
   end
 
   describe "delete/1" do
     setup do
       {:ok, %{id: id}} =
-        UserRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
+        UsersRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
 
       on_exit(fn ->
         nil
@@ -121,7 +122,7 @@ defmodule Blogs.BlogsRepositoryTest do
         |> BlogsRepository.create()
 
       assert BlogsRepository.delete(id)
-      assert is_nil(BlogsRepository.get(id))
+      assert {:ok, nil} = BlogsRepository.get(id)
     end
   end
 end

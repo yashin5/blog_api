@@ -1,17 +1,17 @@
-defmodule BlogApi.Users.UserRepository do
+defmodule BlogApi.Users.UsersRepository do
   @moduledoc """
     This module is responsable to create, get and authenticate a user.
   """
 
   alias BlogApi.Repo
-  alias BlogApi.Tokens.TokenRepository
+  alias BlogApi.Tokens.TokensRepository
   alias BlogApi.Users.User
 
   @doc """
   Create a user
 
   ## Examples
-      BlogApi.Users.UserRepository.new_user("Yashin Santos",  "y@gmail.com", "B@kxin123")
+      BlogApi.Users.UsersRepository.new_user("Yashin Santos",  "y@gmail.com", "B@kxin123")
   """
   @spec new_user(String.t(), String.t(), String.t(), String.t()) ::
           {:ok, User.t()} | {:error, atom()}
@@ -35,7 +35,7 @@ defmodule BlogApi.Users.UserRepository do
   Verify if email and password is valid
 
   ## Examples
-      BlogApi.Users.UserRepository.authenticate(y@gmin.com", "B@kxin123")
+      BlogApi.Users.UsersRepository.authenticate(y@gmin.com", "B@kxin123")
   """
   @callback authenticate(%{email: String.t(), password: String.t()}) ::
               {:ok, String.t()} | {:error, atom()}
@@ -53,7 +53,7 @@ defmodule BlogApi.Users.UserRepository do
 
   def authenticate(_), do: {:error, :invalid_password_type}
 
-  defp do_authenticate(true, user_id), do: TokenRepository.generate_token(user_id)
+  defp do_authenticate(true, user_id), do: TokensRepository.generate_token(user_id)
 
   defp do_authenticate(_, _), do: {:error, :invalid_email_or_password}
 

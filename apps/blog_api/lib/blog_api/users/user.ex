@@ -8,6 +8,7 @@ defmodule BlogApi.Users.User do
 
   alias BlogApi.Blogs.Blog
   alias BlogApi.Tokens.Token
+  alias BlogApi.Posts.Post
 
   @type t :: %__MODULE__{
           email: String.t(),
@@ -28,6 +29,7 @@ defmodule BlogApi.Users.User do
     field(:password_hash, :string)
 
     has_many(:blogs, Blog)
+    has_many(:posts, Post)
     has_many(:tokens, Token)
 
     timestamps()
