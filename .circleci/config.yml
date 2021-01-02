@@ -22,5 +22,6 @@ jobs:
     steps:
       - checkout
       - run: apt-get update && apt-get install make gcc -y && mix do local.hex --force, local.rebar
-      - run: mix start
-      - run: mix test     
+      - run: mix setup
+      - run: mix test        
+        
