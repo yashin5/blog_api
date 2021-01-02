@@ -1,8 +1,8 @@
 version: 2
 
 jobs:
-  docker:
-    build:
+  build:
+    docker:
       - image: elixir:1.11.2-slim
         environment:
           MIX_ENV: test
@@ -27,4 +27,4 @@ jobs:
       - run: apt-get update && apt-get install make gcc -y && mix do local.hex --force, local.rebar
       - run: mix start
       - run: mix test        
-      
+        
