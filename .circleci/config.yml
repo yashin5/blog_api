@@ -1,0 +1,26 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: elixir:1.11.2-slim
+        environment:
+          PGDATA: /var/lib/postgresql/data/pgdata
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: account_repository_test
+
+      - image: postgres:11-alpine        
+        name: db
+        environment:
+          PGDATA: /var/lib/postgresql/data/pgdata
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: account_repository_test
+        
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: apt-get update && apt-get install make gcc -y && mix do local.hex --force, local.rebar
+      - run: mix start
+      - run: mix test     
