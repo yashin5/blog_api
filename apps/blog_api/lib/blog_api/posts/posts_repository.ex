@@ -183,7 +183,7 @@ defmodule BlogApi.Posts.PostsRepository do
       PostsRepository.delete_post(post_id)
   """
   @spec delete_post(Ecto.UUID.t()) :: {integer(), nil | [term()]}
-  def delete_post(post_id: post_id) do
+  def delete_post(post_id) do
     Post
     |> where([post], post.id == ^post_id)
     |> Repo.delete_all()
@@ -221,7 +221,7 @@ defmodule BlogApi.Posts.PostsRepository do
 
       PostsRepository.delete_post(blog_id)
   """
-  @spec delete_all_user_post(Ecto.UUID.t()) :: {integer(), nil | [term()]}
+  @spec delete_all_blog_post(Ecto.UUID.t()) :: {integer(), nil | [term()]}
   def delete_all_blog_post(blog_id) do
     Post
     |> where([post], post.blog_id == ^blog_id)

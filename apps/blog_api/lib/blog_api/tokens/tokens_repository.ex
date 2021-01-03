@@ -48,7 +48,7 @@ defmodule BlogApi.Tokens.TokensRepository do
   ## Examples
       BlogApi.Tokens.TokensRepository.validate_token(%{"token" => token})
   """
-  @callback validate_token(String.t()) :: {:ok, String.t()} | {:error, atom()}
+  @callback validate_token(%{:token => String.t()}) :: {:ok, String.t()} | {:error, atom()}
   def validate_token(%{"token" => token}) when is_binary(token) do
     Token
     |> where([token], token.token == ^token)

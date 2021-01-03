@@ -178,7 +178,7 @@ defmodule Posts.PostsRepositoryTest do
     test "should delete all posts from a user", %{user_id: user_id, post_id: post_id} do
       assert length(PostsRepository.get_user_posts(user_id)) == 3
 
-      assert PostsRepository.delete_post(post_id: post_id) == {1, nil}
+      assert PostsRepository.delete_post(post_id) == {1, nil}
 
       assert length(PostsRepository.get_user_posts(user_id)) == 2
     end
