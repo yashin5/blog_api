@@ -184,6 +184,40 @@ defmodule Posts.PostsRepositoryTest do
     end
   end
 
+  describe "update/2" do
+    setup do
+      {:ok, %{id: user_id}} =
+        UsersRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
+
+      {:ok, %{id: blog_id}} =
+        BlogsRepository.create(%{
+          user_id: user_id,
+          name: "Jurema's blog",
+          description: "that's it!"
+        })
+
+      post_params = %{
+        title: "Cobra Kai",
+        user_id: user_id,
+        blog_id: blog_id,
+        content: "Myohon rangekyo"
+      }
+
+      {:ok, %{id: post_id}} = PostsRepository.create(post_params)
+
+      Enum.each(1..2, fn _each ->
+        PostsRepository.create(post_params)
+      end)
+
+      {:ok, %{user_id: user_id, post_id: post_id}}
+    end
+
+    test "should update post", %{post_id: post_id} do
+      assert {:ok, %{title: "opa", content: "Somos buda"}} =
+               PostsRepository.update(%{post_id: post_id}, %{title: "opa", content: "Somos buda"})
+    end
+  end
+
   describe "delete_all_user_post/1" do
     setup do
       {:ok, %{id: user_id}} =

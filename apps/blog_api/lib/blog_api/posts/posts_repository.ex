@@ -34,6 +34,15 @@ defmodule BlogApi.Posts.PostsRepository do
   @spec get_all() :: [Post.t()] | []
   def get_all, do: Repo.all(Post)
 
+  @spec update(%{post_id: Ecto.UUID.t()}, map()) :: {:ok, Post.t()} | {:error, Ecto.Changeset.t()}
+  def update(%{post_id: post_id}, attrs) do
+    with {:ok, post} <- get_post(post_id) do
+      post
+      |> Post.changeset_update(attrs)
+      |> Repo.update()
+    end
+  end
+
   @spec delete_user_post(map()) :: {integer(), nil | [term()]}
   def delete_user_post(%{user_id: user_id, post_id: post_id}) do
     Post

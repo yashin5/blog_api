@@ -24,7 +24,7 @@ defmodule BlogApi.Blogs.BlogsRepository do
   @spec get(Ecto.UUID.t()) :: {:ok, Blog.t() | nil}
   def get(id), do: {:ok, Repo.get(Blog, id)}
 
-  @spec update(Ecto.UUID.t(), map()) :: {:ok, Blog.t()} | {:error, Ecto.Changeset.t()}
+  @spec update(%{blog_id: Ecto.UUID.t()}, map()) :: {:ok, Blog.t()} | {:error, Ecto.Changeset.t()}
   def update(blog_id, %{} = attrs) do
     with {:ok, blog} <- get(blog_id) do
       blog

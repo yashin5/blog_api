@@ -15,14 +15,16 @@ defmodule BlogApi.Posts.Post do
           blog_id: Ecto.UUID.t()
         }
 
-  @required_fields [
+  @create_required_fields [
     :user_id,
     :blog_id,
     :author,
+    :content,
     :title
   ]
 
-  @optional_fields [
+  @update_optional_fields [
+    :title,
     :content
   ]
 
@@ -41,8 +43,14 @@ defmodule BlogApi.Posts.Post do
 
   def changeset(%__MODULE__{} = blog, attrs) do
     blog
-    |> cast(attrs, @required_fields ++ @optional_fields)
-    |> validate_required(@required_fields ++ [:content])
+    |> cast(attrs, @create_required_fields)
+    |> validate_required(@create_required_fields)
+    |> generate_reading_time()
+  end
+
+  def changeset_update(%__MODULE__{} = blog, attrs) do
+    blog
+    |> cast(attrs, @update_optional_fields)
     |> generate_reading_time()
   end
 
