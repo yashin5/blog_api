@@ -7,8 +7,8 @@ defmodule BlogApi.Users.User do
   import Ecto.Changeset
 
   alias BlogApi.Blogs.Blog
-  alias BlogApi.Tokens.Token
   alias BlogApi.Posts.Post
+  alias BlogApi.Tokens.Token
 
   @type t :: %__MODULE__{
           email: String.t(),
@@ -22,15 +22,15 @@ defmodule BlogApi.Users.User do
   @primary_key {:id, Ecto.UUID, autogenerate: true}
 
   schema "users" do
-    field(:role, :string)
-    field(:email, :string)
-    field(:name, :string)
-    field(:password, :string, virtual: true)
-    field(:password_hash, :string)
+    field :role, :string
+    field :email, :string
+    field :name, :string
+    field :password, :string, virtual: true
+    field :password_hash, :string
 
-    has_many(:blogs, Blog)
-    has_many(:posts, Post)
-    has_many(:tokens, Token)
+    has_many :blogs, Blog
+    has_many :posts, Post
+    has_many :tokens, Token
 
     timestamps()
   end

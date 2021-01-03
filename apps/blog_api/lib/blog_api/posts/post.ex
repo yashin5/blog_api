@@ -5,6 +5,16 @@ defmodule BlogApi.Posts.Post do
 
   alias BlogApi.{Blogs.Blog, Users.User}
 
+  @type t :: %__MODULE__{
+          id: Ecto.UUID.t(),
+          title: String.t(),
+          author: String.t(),
+          content: String.t(),
+          reading_time: String.t(),
+          user_id: Ecto.UUID.t(),
+          blog_id: Ecto.UUID.t()
+        }
+
   @required_fields [
     :user_id,
     :blog_id,
@@ -23,8 +33,8 @@ defmodule BlogApi.Posts.Post do
     field :content, :string
     field :reading_time, :string
 
-    belongs_to(:user, User, type: :binary_id)
-    belongs_to(:blog, Blog, type: :binary_id)
+    belongs_to :user, User, type: :binary_id
+    belongs_to :blog, Blog, type: :binary_id
 
     timestamps()
   end

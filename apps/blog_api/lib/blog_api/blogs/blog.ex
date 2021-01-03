@@ -5,6 +5,13 @@ defmodule BlogApi.Blogs.Blog do
 
   alias BlogApi.{Posts.Post, Users.User}
 
+  @type t :: %__MODULE__{
+          id: Ecto.UUID.t(),
+          name: String.t(),
+          description: String.t(),
+          user_id: Ecto.UUID.t()
+        }
+
   @required_fields [
     :name,
     :user_id
@@ -19,9 +26,9 @@ defmodule BlogApi.Blogs.Blog do
     field :name, :string
     field :description, :string
 
-    belongs_to(:user, User, type: :binary_id)
+    belongs_to :user, User, type: :binary_id
 
-    has_many(:posts, Post)
+    has_many :posts, Post
 
     timestamps()
   end

@@ -43,7 +43,7 @@ defmodule Blogs.BlogsRepositoryTest do
     end
 
     test "should update a blog", %{user_id: user_id} do
-      {:ok, %{id: id} = blog} =
+      {:ok, %{id: id}} =
         BlogsRepository.create(%{
           user_id: user_id,
           name: "Jurema's blog",
@@ -54,7 +54,7 @@ defmodule Blogs.BlogsRepositoryTest do
         updated_attrs = %{name: "Goku's blog", description: "not's it"}
 
       assert {:ok, %{id: ^id, name: ^name, description: ^description}} =
-               BlogsRepository.update(blog, updated_attrs)
+               BlogsRepository.update(id, updated_attrs)
     end
   end
 

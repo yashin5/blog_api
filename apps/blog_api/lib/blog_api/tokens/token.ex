@@ -14,9 +14,9 @@ defmodule BlogApi.Tokens.Token do
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "tokens" do
-    field(:token, :string)
+    field :token, :string
 
-    belongs_to(:user, User, type: :binary_id)
+    belongs_to :user, User, type: :binary_id
 
     timestamps()
   end

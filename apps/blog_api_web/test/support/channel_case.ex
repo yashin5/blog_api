@@ -16,6 +16,7 @@ defmodule BlogApiWeb.ChannelCase do
   """
 
   use ExUnit.CaseTemplate
+  alias Ecto.Adapters.SQL.Sandbox
 
   using do
     quote do
@@ -29,10 +30,10 @@ defmodule BlogApiWeb.ChannelCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(BlogApi.Repo)
+    :ok = Sandbox.checkout(BlogApi.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(BlogApi.Repo, {:shared, self()})
+      Sandbox.mode(BlogApi.Repo, {:shared, self()})
     end
 
     :ok
