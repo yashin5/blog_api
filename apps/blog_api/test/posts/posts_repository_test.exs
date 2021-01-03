@@ -147,7 +147,7 @@ defmodule Posts.PostsRepositoryTest do
     end
   end
 
-  describe "delete_user_post/1" do
+  describe "delete_post/1" do
     setup do
       {:ok, %{id: user_id}} =
         UsersRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
@@ -178,7 +178,7 @@ defmodule Posts.PostsRepositoryTest do
     test "should delete all posts from a user", %{user_id: user_id, post_id: post_id} do
       assert length(PostsRepository.get_user_posts(user_id)) == 3
 
-      assert PostsRepository.delete_user_post(%{user_id: user_id, post_id: post_id}) == {1, nil}
+      assert PostsRepository.delete_post(post_id: post_id) == {1, nil}
 
       assert length(PostsRepository.get_user_posts(user_id)) == 2
     end
@@ -246,6 +246,37 @@ defmodule Posts.PostsRepositoryTest do
       assert length(PostsRepository.get_user_posts(user_id)) == 3
       assert PostsRepository.delete_all_user_post(user_id) == {3, nil}
       assert Enum.empty?(PostsRepository.get_user_posts(user_id))
+    end
+  end
+
+  describe "delete_all_blog_post/1" do
+    setup do
+      {:ok, %{id: user_id}} =
+        UsersRepository.new_user("regular", "Yaxx", "yaxx@gmailsx.com", "X@ghnx1234")
+
+      {:ok, %{id: blog_id}} =
+        BlogsRepository.create(%{
+          user_id: user_id,
+          name: "Jurema's blog",
+          description: "that's it!"
+        })
+
+      Enum.each(1..3, fn _each ->
+        PostsRepository.create(%{
+          title: "Cobra Kai",
+          user_id: user_id,
+          blog_id: blog_id,
+          content: "Myohon rangekyo"
+        })
+      end)
+
+      {:ok, %{blog_id: blog_id}}
+    end
+
+    test "should delete all posts from a blog", %{blog_id: blog_id} do
+      assert length(PostsRepository.get_all_blog_posts(blog_id)) == 3
+      assert PostsRepository.delete_all_blog_post(blog_id) == {3, nil}
+      assert Enum.empty?(PostsRepository.get_all_blog_posts(blog_id))
     end
   end
 end

@@ -54,7 +54,7 @@ defmodule Blogs.BlogsRepositoryTest do
         updated_attrs = %{name: "Goku's blog", description: "not's it"}
 
       assert {:ok, %{id: ^id, name: ^name, description: ^description}} =
-               BlogsRepository.update(id, updated_attrs)
+               BlogsRepository.update(%{blog_id: id}, updated_attrs)
     end
   end
 

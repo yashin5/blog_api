@@ -13,10 +13,7 @@ defmodule BlogApi.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps(),
-      dialyzer: [
-        ignore_warnings: "../../.dialyzer-ignore.exs"
-      ]
+      deps: deps()
     ]
   end
 
@@ -44,8 +41,7 @@ defmodule BlogApi.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:mox, "~> 0.5.0", only: :test},
       {:jason, "~> 1.0"},
-      {:argon2_elixir, "~> 2.3"},
-      {:dialyxir, "~> 1.0", only: [:test], runtime: false}
+      {:argon2_elixir, "~> 2.3"}
     ]
   end
 

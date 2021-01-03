@@ -1,6 +1,6 @@
 defmodule BlogApi.Users.User do
   @moduledoc """
-  Schema to table User
+  Schema to table users
   """
   use Ecto.Schema
 

@@ -1,5 +1,7 @@
 defmodule BlogApi.Blogs.Blog do
-  @moduledoc false
+  @moduledoc """
+  Schema to table blogs
+  """
   use Ecto.Schema
   import Ecto.Changeset
 

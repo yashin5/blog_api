@@ -1,6 +1,6 @@
 defmodule BlogApi.Tokens.Token do
   @moduledoc """
-  Schema to table Token
+  Schema to table tokens
   """
   use Ecto.Schema
 
