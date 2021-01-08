@@ -1,6 +1,6 @@
 defmodule BlogApi.Tokens.Token do
   @moduledoc """
-  Schema to table Token
+  Schema to table tokens
   """
   use Ecto.Schema
 
@@ -14,9 +14,9 @@ defmodule BlogApi.Tokens.Token do
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "tokens" do
-    field(:token, :string)
+    field :token, :string
 
-    belongs_to(:user, User, type: :binary_id)
+    belongs_to :user, User, type: :binary_id
 
     timestamps()
   end
@@ -24,12 +24,12 @@ defmodule BlogApi.Tokens.Token do
   def changeset_insert(accounts, params \\ %{}) do
     accounts
     |> cast(params, [:token, :user_id])
-    |> validate_required([:token, :user_id])    
+    |> validate_required([:token, :user_id])
   end
 
   def changeset_update(accounts, %{} = params) do
     accounts
     |> cast(params, [:updated_at])
-    |> validate_required([:updated_at])    
+    |> validate_required([:updated_at])
   end
 end

@@ -1,4 +1,4 @@
-defmodule BlogApi.Tokens.TokenRepository do
+defmodule BlogApi.Tokens.TokensRepository do
   @moduledoc """
     This module is responsable to generate, validate and renew the token.
   """
@@ -6,17 +6,17 @@ defmodule BlogApi.Tokens.TokenRepository do
 
   alias BlogApi.Repo
   alias BlogApi.Tokens.Token
-  alias BlogApi.Users.UserRepository
+  alias BlogApi.Users.UsersRepository
 
   @doc """
   Generate a token
 
   ## Examples
-      BlogApi.Tokens.TokenRepository.generate_token(account.id)
+      BlogApi.Tokens.TokensRepository.generate_token(account.id)
   """
   @spec generate_token(String.t()) :: {:ok, String.t()} | {:error, atom()}
   def generate_token(id) do
-    with {:ok, user} <- UserRepository.get_user(%{user_id: id}),
+    with {:ok, user} <- UsersRepository.get_user(%{user_id: id}),
          {:ok, new_token} <- do_generate_token() do
       {_, token} =
         user
@@ -46,9 +46,9 @@ defmodule BlogApi.Tokens.TokenRepository do
   Validate the token
 
   ## Examples
-      BlogApi.Tokens.TokenRepository.validate_token(%{"token" => token})
+      BlogApi.Tokens.TokensRepository.validate_token(%{"token" => token})
   """
-  @callback validate_token(String.t()) :: {:ok, String.t()} | {:error, atom()}
+  @callback validate_token(%{:token => String.t()}) :: {:ok, String.t()} | {:error, atom()}
   def validate_token(%{"token" => token}) when is_binary(token) do
     Token
     |> where([token], token.token == ^token)
